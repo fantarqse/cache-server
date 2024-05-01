@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	cache "cache-server/cmd"
+	cachecmd "cache-server/cmd"
 )
 
 func main() {
-	if err := cache.Run(); err != nil {
+	if err := cachecmd.Run(); err != nil {
 		log.Fatalf("failed to start server: %s\n", err.Error())
 	}
 }
