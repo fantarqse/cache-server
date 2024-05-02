@@ -4,21 +4,24 @@ import (
 	"log"
 
 	"cache-server/internal/cache"
+	"cache-server/internal/config"
 	"cache-server/internal/server"
 )
 
-// TODO: move to the config file
-const addr string = "localhost:6379"
-
 func Run() error {
+	cfg, err := config.Read()
+	if err != nil {
+		return err
+	}
+
 	log.Println("a redis is running")
-	redis := cache.New(addr)
+	redis := cache.New(cfg.Redis)
 
 	srv := server.New(redis)
 	srv.Routes()
 
 	log.Println("a server is running")
-	if err := srv.Run(":8080"); err != nil {
+	if err := srv.Run(cfg.Server.Port); err != nil {
 		return err
 	}
 

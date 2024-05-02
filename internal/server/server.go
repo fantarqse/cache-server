@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"cache-server/internal/cache"
@@ -27,5 +28,5 @@ func (s *Server) Routes() {
 }
 
 func (s *Server) Run(port string) error {
-	return http.ListenAndServe(port, s.mux)
+	return http.ListenAndServe(fmt.Sprintf(":%s", port), s.mux)
 }
