@@ -19,7 +19,12 @@ func New(cache *cache.Client) *Server {
 	}
 }
 
-// TODO: routes
+func (s *Server) Routes() {
+	s.mux.HandleFunc("GET /items/top", s.GetTop)
+	s.mux.HandleFunc("GET /items", s.Get)
+	s.mux.HandleFunc("PUT /items", s.Put)
+	s.mux.HandleFunc("DELETE /items", s.Delete)
+}
 
 func (s *Server) Run(port string) error {
 	return http.ListenAndServe(port, s.mux)
