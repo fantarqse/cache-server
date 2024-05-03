@@ -14,10 +14,7 @@ func Run() error {
 
 	redis := cache.New(cfg.Redis)
 
-	srv := server.New(redis)
-	srv.Routes()
-
-	if err := srv.Run(cfg.Server.Port); err != nil {
+	if err := server.New(redis).Run(cfg.Server.Port); err != nil {
 		return err
 	}
 

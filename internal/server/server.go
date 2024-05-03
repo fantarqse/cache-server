@@ -19,13 +19,11 @@ func New(cache *cache.Client) *Server {
 	}
 }
 
-func (s *Server) Routes() {
+func (s *Server) Run(port string) error {
 	s.mux.HandleFunc("GET /items/top", logMiddleware(s.GetTop))
 	s.mux.HandleFunc("GET /items", logMiddleware(s.Get))
 	s.mux.HandleFunc("PUT /items", logMiddleware(s.Put))
 	s.mux.HandleFunc("DELETE /items", logMiddleware(s.Delete))
-}
 
-func (s *Server) Run(port string) error {
 	return http.ListenAndServe(fmt.Sprintf(":%s", port), s.mux)
 }
