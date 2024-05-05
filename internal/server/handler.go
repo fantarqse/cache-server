@@ -11,7 +11,7 @@ type Payload struct{}
 
 type Response struct{}
 
-func (s *Server) GetTop(w http.ResponseWriter, r *http.Request) {
+func (s *Server) GetAll(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 

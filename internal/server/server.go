@@ -1,26 +1,32 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"net/http"
-
-	"cache-server/internal/cache"
 )
 
-type Server struct {
-	mux   *http.ServeMux
-	cache *cache.Client
+type Storage interface {
+	GetAll(ctx context.Context) error
+	Get(ctx context.Context) error
+	Put(ctx context.Context) error
+	Delete(ctx context.Context) error
 }
 
-func New(cache *cache.Client) *Server {
+type Server struct {
+	mux     *http.ServeMux
+	storage Storage
+}
+
+func New(storage Storage) *Server {
 	return &Server{
-		mux:   http.NewServeMux(),
-		cache: cache,
+		mux:     http.NewServeMux(),
+		storage: storage,
 	}
 }
 
 func (s *Server) Run(port string) error {
-	s.mux.HandleFunc("GET /items/top", logMiddleware(s.GetTop))
+	s.mux.HandleFunc("GET /items/top", logMiddleware(s.GetAll))
 	s.mux.HandleFunc("GET /items", logMiddleware(s.Get))
 	s.mux.HandleFunc("PUT /items", logMiddleware(s.Put))
 	s.mux.HandleFunc("DELETE /items", logMiddleware(s.Delete))
