@@ -1,9 +1,9 @@
 package cachecmd
 
 import (
-	"cache-server/internal/cache"
 	"cache-server/internal/config"
 	"cache-server/internal/server"
+	"cache-server/internal/storage"
 )
 
 func Run() error {
@@ -12,7 +12,7 @@ func Run() error {
 		return err
 	}
 
-	redis := cache.New(cfg.Redis)
+	redis := storage.New(cfg.Redis)
 
 	if err := server.New(redis).Run(cfg.Server.Port); err != nil {
 		return err

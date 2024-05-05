@@ -1,6 +1,7 @@
-package cache
+package storage
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/redis/go-redis/v9"
@@ -20,4 +21,20 @@ func New(cfg config.Redis) *Client {
 			DB:       0,  // use default DB
 		}),
 	}
+}
+
+func (c *Client) GetAll(ctx context.Context) error {
+	panic("not implemented")
+}
+
+func (c *Client) Get(ctx context.Context) error {
+	panic("not implemented")
+}
+
+func (c *Client) Put(ctx context.Context) error {
+	panic("not implemented")
+}
+
+func (c *Client) Delete(ctx context.Context) error {
+	panic("not implemented")
 }
